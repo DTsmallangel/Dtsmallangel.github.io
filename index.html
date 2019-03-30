@@ -239,6 +239,347 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="git@github.com:DTsmallangel/dtsmallangel.github.io.git/2019/03/30/2vpsuse/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="yaoyao">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CatchUp">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/03/30/2vpsuse/" itemprop="url">v2ray在linux下使用教程</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-30T16:04:21+08:00">
+                2019-03-30
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/03/30/2vpsuse/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/03/30/2vpsuse/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  1
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="ubuntu使用v2ray"><a href="#ubuntu使用v2ray" class="headerlink" title="ubuntu使用v2ray"></a><center>ubuntu使用v2ray</center></h1><p>基本思想：linux本地使用docker运行v2ray</p>
+<h2 id="一-软件安装"><a href="#一-软件安装" class="headerlink" title="一　软件安装"></a>一　软件安装</h2><ol>
+<li><p>安装curl(<em>为了安装docker</em>)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">apt-get update</span><br><span class="line">apt-get install curl</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>安装docker</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">curl -sSL https://get.docker.com/ | sh</span><br><span class="line">systemctl start docker</span><br><span class="line">systemctl status docker</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="二-本地开启v2ray"><a href="#二-本地开启v2ray" class="headerlink" title="二　本地开启v2ray"></a>二　本地开启v2ray</h2><ol>
+<li>用docker配置本地的v2ray<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mkdir V2ray</span><br><span class="line">cd V2ray</span><br><span class="line">vi config.json</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>config.json的内容如图所示：其中address\port\uuid是根据服务器来配置的<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  &quot;inbounds&quot;: [</span><br><span class="line">    &#123;</span><br><span class="line">      &quot;port&quot;: 1080, // 监听端口</span><br><span class="line">      &quot;protocol&quot;: &quot;socks&quot;, // 入口协议为 SOCKS 5</span><br><span class="line">      &quot;sniffing&quot;: &#123;</span><br><span class="line">        &quot;enabled&quot;: true,</span><br><span class="line">        &quot;destOverride&quot;: [&quot;http&quot;, &quot;tls&quot;]</span><br><span class="line">      &#125;,</span><br><span class="line">      &quot;settings&quot;: &#123;</span><br><span class="line">        &quot;auth&quot;: &quot;noauth&quot;  //socks的认证设置，noauth 代表不认证，由于 socks 通常在客户端使用，所以这里不认证</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  ],</span><br><span class="line">  &quot;outbounds&quot;: [</span><br><span class="line">    &#123;</span><br><span class="line">      &quot;protocol&quot;: &quot;vmess&quot;, // 出口协议</span><br><span class="line">      &quot;settings&quot;: &#123;</span><br><span class="line">        &quot;vnext&quot;: [</span><br><span class="line">          &#123;</span><br><span class="line">            &quot;address&quot;: &quot;68.183.237.179&quot;, // 服务器地址，请修改为你自己的服务器 IP 或域名</span><br><span class="line">            &quot;port&quot;: 22579,  // 服务器端口</span><br><span class="line">            &quot;users&quot;: [</span><br><span class="line">              &#123;</span><br><span class="line">                &quot;id&quot;: &quot;c97e81ac-b66e-49bc-8c13-66240351f636&quot;,  // 用户 ID，必须与服务器端配置相同</span><br><span class="line">                &quot;alterId&quot;: 64 // 此处的值也应当与服务器相同</span><br><span class="line">              &#125;</span><br><span class="line">            ]</span><br><span class="line">          &#125;</span><br><span class="line">        ]</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>在本地启动v2ray<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run --name v2ray -v $PWD:/etc/v2ray -p 1080:1080 v2ray/official</span><br></pre></td></tr></table></figure></p>
+<p>这样v2ray就在本地跑起来了</p>
+<h2 id="三-配置本地代理"><a href="#三-配置本地代理" class="headerlink" title="三　配置本地代理"></a>三　配置本地代理</h2><p>打开:settings&gt;network&gt;network proxy<br><img src="https://s2.ax1x.com/2019/03/30/ABjlrt.png" alt="ABjlrt.png"></p>
+<h2 id="四-安装浏览器插件"><a href="#四-安装浏览器插件" class="headerlink" title="四　安装浏览器插件"></a>四　安装浏览器插件</h2><ol>
+<li>浏览器安装<strong>swithyomega</strong>插件</li>
+<li>配置一个v2ray的profile<br><a href="https://imgchr.com/i/ABONTS" target="_blank" rel="noopener"><img src="https://s2.ax1x.com/2019/03/30/ABONTS.md.png" alt="ABONTS.md.png"></a></li>
+<li>设置autoswitch来实现访问国内网站是不用vpn，访问国外网站时使用vpn<br><a href="https://imgchr.com/i/ABj8Vf" target="_blank" rel="noopener"><img src="https://s2.ax1x.com/2019/03/30/ABj8Vf.md.png" alt="ABj8Vf.md.png"></a></li>
+</ol>
+<h2 id="五-结果展示"><a href="#五-结果展示" class="headerlink" title="五 结果展示"></a>五 结果展示</h2><ol>
+<li>我们可以看4k的youtube视频<br><a href="https://imgchr.com/i/ABjLzd" target="_blank" rel="noopener"><img src="https://s2.ax1x.com/2019/03/30/ABjLzd.md.png" alt="ABjLzd.md.png"></a></li>
+<li>我们实现了方位国内不用vpn，这样可以避免被检测而且可以节约流量<br><a href="https://imgchr.com/i/ABvKFU" target="_blank" rel="noopener"><img src="https://s2.ax1x.com/2019/03/30/ABvKFU.md.png" alt="ABvKFU.md.png"></a></li>
+</ol>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="git@github.com:DTsmallangel/dtsmallangel.github.io.git/2019/03/30/1vps/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="yaoyao">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CatchUp">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/03/30/1vps/" itemprop="url">v2way搭建教程</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-30T15:53:43+08:00">
+                2019-03-30
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/03/30/1vps/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/03/30/1vps/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  1
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="v2ray搭建教程-center-gt"><a href="#v2ray搭建教程-center-gt" class="headerlink" title="v2ray搭建教程/center&gt;"></a><center>v2ray搭建教程/center&gt;</center></h1><ol>
+<li>购买服务器</li>
+<li><p>进入服务器</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh root@vps_ID</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>设置时区同步</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">date -R</span><br><span class="line">tzselect</span><br><span class="line">cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime</span><br><span class="line">date -R</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>配置bbr加速</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">echo &quot;net.core.default_qdisc=fq&quot; &gt;&gt; /etc/sysctl.conf</span><br><span class="line">echo &quot;net.ipv4.tcp_congestion_control=bbr&quot; &gt;&gt; /etc/sysctl.conf</span><br><span class="line">sysctl -p</span><br><span class="line">lsmod | grep bbr</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>安装v2ray</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">apt-get update</span><br><span class="line">apt-get install curl -y</span><br><span class="line">bash &lt;(curl -L -s https://install.direct/go.sh)</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>安装结束后会返回v2ray的<em>uuid</em>和<em>port</em></p>
+<ol start="5">
+<li>启动v2ray<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">systemctl start v2ray</span><br><span class="line">systemctl status v2ray</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h1 id="v2ray各平台使用"><a href="#v2ray各平台使用" class="headerlink" title="v2ray各平台使用"></a>v2ray各平台使用</h1><h2 id="Linux"><a href="#Linux" class="headerlink" title="Linux"></a>Linux</h2><p>linux本地使用docker运行v2ray</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="git@github.com:DTsmallangel/dtsmallangel.github.io.git/2019/03/25/6allV2ray/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1392,7 +1733,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-count">9</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1405,7 +1746,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-count">6</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -1456,7 +1797,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">2k</span>
+    <span title="Site words total count">2.5k</span>
   
 </div>
 
